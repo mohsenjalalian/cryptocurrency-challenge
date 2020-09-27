@@ -1,0 +1,70 @@
+version: '2.3'
+services:
+    crypto-nginx:
+        build:
+            context: ./
+            dockerfile: ./docker/crypto-nginx/Dockerfile
+        image: crypto-nginx:latest
+        container_name: crypto-nginx
+        volumes:
+            - .:/src
+        ports:
+            - 80:80
+            - 443:443
+        depends_on:
+            - crypto-php-fpm
+    crypto-php-fpm:
+        build:
+            context: ./
+            dockerfile: ./docker/crypto-php-fpm/Dockerfile
+        image: crypto-php-fpm:latest
+        container_name: crypto-php-fpm
+        volumes:
+            - .:/src
+    crypto-php-cli:
+        build:
+            context: ./
+            dockerfile: ./docker/crypto-php-cli/Dockerfile
+        image: crypto-php-cli:latest
+        container_name: crypto-php-cli
+        tty: true
+        stdin_open: true
+        volumes:
+            - .:/src
+            - ./docker/crypto-php-cli/log:/etc/supervisor/log
+    crypto-mariadb:
+        image: mariadb:10.3.11
+        container_name: crypto-mariadb
+        ports:
+            - 3306:3306
+        volumes:
+            - crypto-mariadata:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=123456
+    crypto-phpmyadmin:
+        image: phpmyadmin/phpmyadmin:4.8.3
+        container_name: crypto-phpmyadmin
+        environment:
+            - PMA_HOST=crypto-mariadb
+        ports:
+            - 8080:80
+    crypto-swagger-ui:
+      image: swaggerapi/swagger-ui
+      container_name: crypto-swagger-ui
+      ports:
+        - "8082:8080"
+      volumes:
+        - ./docs/swagger/openapi.json:/openapi.json
+      environment:
+        SWAGGER_JSON: /openapi.json
+    crypto-redis:
+        image: redis:5.0.7
+        container_name: crypto-redis
+        volumes:
+            - crypto-redis-data:/data
+        ports:
+          - 6379:6379
+volumes:
+    crypto-mariadata:
+    crypto-elasticsearchdata:
+    crypto-redis-data:
