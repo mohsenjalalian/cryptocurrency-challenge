@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCurrenciesPricesTable extends Migration
+class CreateCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateCurrenciesPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currencies_prices', function (Blueprint $table) {
+        Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique()->index();
+            $table->string('symbol');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateCurrenciesPricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currencies_prices');
+        Schema::dropIfExists('currencies');
     }
 }
