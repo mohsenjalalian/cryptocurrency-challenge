@@ -13,7 +13,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        dd('index');
     }
 
     /**
@@ -24,7 +24,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd('store');
     }
 
     /**
@@ -35,6 +35,6 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        dd('show');
     }
 }
