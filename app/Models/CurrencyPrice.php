@@ -14,4 +14,9 @@ class CurrencyPrice extends Model
     {
         return $this->belongsTo('App\Models\Currency');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
 }
