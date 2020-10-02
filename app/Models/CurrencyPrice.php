@@ -9,6 +9,11 @@ class CurrencyPrice extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'price',
+        'currency_id'
+    ];
+
 
     public function currency()
     {

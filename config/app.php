@@ -123,6 +123,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+
+    'base_currency' => 'IRR',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
