@@ -1,0 +1,84 @@
+{
+	"info": {
+		"_postman_id": "29bd4c79-40b7-460d-af4c-3f1e799f72c9",
+		"name": "crypto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "store order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"jalalianmohsen@gmail.com\",\n\t\"source_currency\": \"USD\",\n\t\"destination_currency\": \"IRR\",\n\t\"amount\": 1000\n}"
+				},
+				"url": {
+					"raw": "http://back.crypto/api/orders",
+					"protocol": "http",
+					"host": [
+						"back",
+						"crypto"
+					],
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://back.crypto/api/orders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tracking_code\": \"7b66ed5e-2b8d-4653-a107-9ec66225fc5a\"\n}"
+				},
+				"url": {
+					"raw": "http://back.crypto/api/orders",
+					"protocol": "http",
+					"host": [
+						"back",
+						"crypto"
+					],
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

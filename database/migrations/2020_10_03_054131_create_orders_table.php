@@ -17,15 +17,24 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('email');
             $table->bigInteger('amount');
+            $table->double('result_amount');
             $table->string('tracking_code')->index();
             $table->unsignedBigInteger('source_currency_id')->unsigned();
             $table->unsignedBigInteger('destination_currency_id')->unsigned();
+            $table->unsignedBigInteger('source_currency_price_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('destination_currency_price_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('source_currency_id')->references('id')->on('currencies')
                 ->onDelete('cascade');
 
             $table->foreign('destination_currency_id')->references('id')->on('currencies')
+                ->onDelete('cascade');
+
+            $table->foreign('source_currency_price_id')->references('id')->on('currency_prices')
+                ->onDelete('cascade');
+
+            $table->foreign('destination_currency_price_id')->references('id')->on('currency_prices')
                 ->onDelete('cascade');
         });
     }

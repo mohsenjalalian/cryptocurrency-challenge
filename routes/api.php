@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('orders', OrderController::class)->only([
-    'index', 'show', 'store'
-]);
+Route::prefix('orders')->group(function () {
+    Route::get('/', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/', [OrderController::class, 'store'])->name('orders.store');
+});
+

@@ -7,6 +7,7 @@ use App\Models\Currency;
 use App\Repositories\CurrencyPriceRepository;
 use Illuminate\Console\Command;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Redis;
 
 class UpdateCurrencyPrices extends Command
 {
@@ -60,7 +61,15 @@ class UpdateCurrencyPrices extends Command
                             'currency_id' => $currency->id
                         ];
 
-                        $this->currencyPriceRepository->create($attributes);
+                        $currencyPrice = $this->currencyPriceRepository->create($attributes);
+
+                        Redis::hmset(
+                            'currency_id:'.$currency->id,
+                            [
+                                'price' => $currencyPrice->price,
+                                'currency_price_id' => $currencyPrice->id
+                            ]
+                        );
                     }
                 }
             }

@@ -2,39 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ShowOrder;
+use App\Http\Requests\StoreOrder;
+use App\Http\Resources\OrderResource;
+use App\Repositories\CurrencyRepository;
+use App\Repositories\OrderRepository;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
+    private $orderRepository;
+    private $currencyRepository;
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * OrderController constructor.
+     * @param OrderRepository $orderRepository
+     * @param CurrencyRepository $currencyRepository
      */
-    public function index()
+    public function __construct(
+        OrderRepository $orderRepository,
+        CurrencyRepository $currencyRepository
+    )
     {
-        dd('index');
+        $this->orderRepository = $orderRepository;
+        $this->currencyRepository = $currencyRepository;
+    }
+
+
+    /**
+     * @param StoreOrder $request
+     * @return JsonResponse
+     */
+    public function store(StoreOrder $request)
+    {
+        $validatedData = $request->validated();
+
+        $validatedData = $request->prepareForStoring($validatedData);
+
+        $order = $this->orderRepository->create($validatedData);
+
+        return response()->json(
+            [
+                'tracking code' => $order->tracking_code
+            ],
+            Response::HTTP_OK
+        );
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ShowOrder $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function show(ShowOrder $request)
     {
-        dd('store');
-    }
+        $validatedData = $request->validated();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        dd('show');
+        $order = $this->orderRepository->findOneBy(
+            'tracking_code',
+            $validatedData['tracking_code']
+        );
+
+        return response()->json(new OrderResource($order));
     }
 }
