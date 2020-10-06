@@ -15,6 +15,7 @@ class CurrencyPriceRepository implements RepositoryInterface
      */
     public function create(array $attributes)
     {
+        //todo should handle exception
         try {
             return CurrencyPrice::create($attributes);
         } catch (Exception $exception) {

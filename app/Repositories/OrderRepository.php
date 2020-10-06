@@ -15,6 +15,7 @@ class OrderRepository implements RepositoryInterface
      */
     public function create(array $attributes)
     {
+        //todo should handle exception
         try {
             return Order::create($attributes);
         } catch (Exception $exception) {

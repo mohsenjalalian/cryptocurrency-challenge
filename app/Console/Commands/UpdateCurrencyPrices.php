@@ -63,6 +63,7 @@ class UpdateCurrencyPrices extends Command
 
                         $currencyPrice = $this->currencyPriceRepository->create($attributes);
 
+                        //todo move somewhere else
                         Redis::hmset(
                             'currency_id:'.$currency->id,
                             [
