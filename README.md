@@ -1,3 +1,11 @@
+About
+--------
+
+A currency system with a base currency
+* a job for update currency prices
+* you can order an exchange
+* you can track your order
+
 ## Installation
 
 * git clone project
