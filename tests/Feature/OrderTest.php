@@ -8,6 +8,8 @@ use Tests\TestCase;
 
 class OrderTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      *
      */
